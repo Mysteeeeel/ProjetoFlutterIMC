@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,10 +28,43 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  TextEditingController pesoController = new TextEditingController();
-  TextEditingController alturaController = new TextEditingController();
+  TextEditingController usuarioController = new TextEditingController();
+  TextEditingController senhaController = new TextEditingController();
 
   String _textoInfo = "Informe seus dados";
+
+  void _limpar_Tela(){
+    usuarioController.text = "";
+    senhaController.text = "";
+    setState(() {
+
+      _textoInfo = "Informe seus dados";
+
+    });
+  }
+
+  void _cadastrar(){
+    setState(() {
+
+      String usuario = (usuarioController.text);
+
+      String senha = (senhaController.text);
+
+      usuarioController.text = "";
+      senhaController.text = "";
+
+      _textoInfo = "Dados cadastrados com sucesso!";
+
+      if (usuario.isEmpty){
+        _textoInfo = "preencha os dados corretamente!";
+      }
+
+      if (senha.isEmpty){
+        _textoInfo = "preencha os dados corretamente!";
+      }
+
+    });
+  }
 
 
   @override
@@ -37,14 +72,14 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
 
-          title: Text("calculadora IMC"),
+          title: Text("Cadastro de usuário"),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.yellow,
 
           actions: <Widget>[
 
             IconButton(
-                onPressed: () {},
+                onPressed: _limpar_Tela,
                 icon: Icon(Icons.refresh)
             ),
 
@@ -62,41 +97,41 @@ class _HomeState extends State<Home> {
           children: <Widget>[
 
             const Icon(
-                Icons.person_outline,
+                Icons.person,
                 size: 120.0,
-                color: Colors.blue
+                color: Colors.yellow
             ),
 
             TextField(
 
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
 
-                labelText: "PESO (KG)",
-                labelStyle: TextStyle(color: Colors.blue),
+                labelText: "Usuario",
+                labelStyle: TextStyle(color: Colors.black),
 
               ),
 
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25.0),
-              controller: pesoController,
+              controller: usuarioController,
 
 
             ),
 
             TextField(
-
-              keyboardType: TextInputType.number,
+              obscureText: true,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
 
-                labelText: "ALTURA (CM)",
-                labelStyle: TextStyle(color: Colors.blue),
+                labelText: "Senha",
+                labelStyle: TextStyle(color: Colors.black),
 
               ),
 
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25.0),
-              controller: alturaController,
+              controller: senhaController,
 
 
             ),
@@ -110,11 +145,14 @@ class _HomeState extends State<Home> {
                 child: ElevatedButton(
 
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.blueAccent)
+                    backgroundColor: MaterialStateProperty.all(Colors.yellow)
                   ),
 
-                    onPressed: () {},
-                    child: const Text("calcular")
+                    onPressed: _cadastrar,
+
+                    child: const Text("Cadastrar")
+
+
 
 
                 ),
